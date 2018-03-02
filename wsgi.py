@@ -10,8 +10,12 @@ def hello():
     myname = socket.gethostname()
     timestamp = str(datetime.datetime.now())
     writelog(logfile, myname, timestamp)
-    return "Hi visitor! This magnificent Silver Lining webpage was brought to you by " + myname + " at " + \
-        timestamp + ". Here is a log of past visits:<br><br>\n" + getlog(logfile)
+    return """<!DOCTYPE html><html><head><title>Silver Lining</title></head>
+<body>
+<h1>Hi visitor!</h1>
+This magnificent Silver Lining webpage was brought to you by """ + myname + " at " + timestamp + """.<br>
+Here is a log of past visits:<br>
+""" + getlog(logfile) + "\n</body></html>"
 
 def writelog(filename, myname, timestamp):
     try:
@@ -24,7 +28,7 @@ def writelog(filename, myname, timestamp):
 def getlog(filename):
     try:
         log = open(filename, "r")
-        retval = "<pre>" + log.read() + "</pre>"
+        retval = "<pre>\n" + log.read() + "</pre>"
         log.close()
         return retval
     except IOError:
